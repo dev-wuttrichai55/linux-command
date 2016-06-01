@@ -1,0 +1,15 @@
+========================================================================================================
+Setting Authentication with Apache2
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano [DIRECTORY]/.htaccess
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+AuthType Basic
+AuthName "Restricted Files"
+AuthUserFile [DIRECTORY].htpasswd
+Require valid-user
+
+- พิมพ์คำสั่ง $ sudo htpasswd -c [DIRECTORY].htpasswd [USERNAME]
+- พิมพ์คำสั่ง $ sudo service apache2 restsrt

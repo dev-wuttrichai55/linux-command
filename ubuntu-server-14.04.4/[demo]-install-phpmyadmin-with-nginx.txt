@@ -1,0 +1,28 @@
+﻿===== TAG =====
+โค๊ชแม็กสอนเขียนโปรแกรม, DriveSoft.IO, Tutorial (Course), PhpMyAdmin, MySQL, Nginx HTTP Server, 
+Nginx, Ubuntu Server, Ubuntu (Operating System), 
+Eakkabin, Eakkabin Jaikeawma, Thailand
+
+**** ขั้นตอนการติดตั้ง PhpMyAdmin with Nginx ****
+--- พิมพ์คำสั่ง $ sudo apt-get install php5-mcrypt phpmyadmin 
+--- เลือกรายการ apache2
+--- กรอกข้อมูล Password & Password Confirm ให้กับ admin mysql
+--- กรอกข้อมูล Password ให้กับ user: root 
+--- พิมพ์คำสั่ง $ sudo service nginx restart
+
+**** กรณี PhpMyAdmin with Nginx ****
+--- พิมพ์คำสั่ง $ sudo ln -s /usr/share/phpmyadmin /var/www/html/phpmyadmin
+--- พิมพ์คำสั่ง $ sudo php5enmod mcrypt
+--- พิมพ์คำสั่ง $ sudo service php5-fpm restart
+--- เปิดเว็บ Browser พิมพ์ URL: http://192.168.43.128/phpmyadmin
+
+**** เพิ่มความปลอดภัย PhpMyAdmin with Nginx ****
+--- พิมพ์คำสั่ง $ printf "admin:$(openssl passwd -1 1234)\n" >> /etc/nginx/pma_pass
+--- พิมพ์คำสั่ง $ sudo nano /etc/nginx/sites-available/default
+         location /phpmyadmin {
+            auth_basic "Admin Login";
+            auth_basic_user_file /etc/nginx/pma_pass;
+        }
+--- พิมพ์คำสั่ง $ sudo service nginx restart
+--- เปิดเว็บ Browser พิมพ์ URL: http://192.168.43.128/phpmyadmin
+

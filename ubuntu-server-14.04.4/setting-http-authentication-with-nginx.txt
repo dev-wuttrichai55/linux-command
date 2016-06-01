@@ -1,0 +1,19 @@
+========================================================================================================
+Setting Authentication with Nginx
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/nginx/sites-available/default
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+server {
+
+	.....
+	
+    auth_basic "Private Property";
+    auth_basic_user_file [DIRECTORY]/.htpasswd;
+	
+}
+
+- พิมพ์คำสั่ง $ sudo htpasswd -c [DIRECTORY].htpasswd [USERNAME]
+- พิมพ์คำสั่ง $ sudo service nginx restsrt หรือ sudo systemctl reload nginx

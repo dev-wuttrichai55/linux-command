@@ -1,0 +1,20 @@
+﻿===== TAG =====
+โค๊ชแม็กสอนเขียนโปรแกรม, DriveSoft.IO, Tutorial (Course), 
+MySQL, MySQL Server, Database Server, Nginx HTTP Server, Nginx, 
+Ubuntu Server, Ubuntu (Operating System), 
+Eakkabin, Eakkabin Jaikeawma, Thailand
+
+**** ขั้นตอนการติดตั้ง MySQL ****
+--- พิมพ์คำสั่ง $ sudo apt-get install mysql-server mysql-client php5-mysql
+--- กรอกข้อมูล Password & Password Confirm ให้กับ User: root
+--- พิมพ์คำสั่ง $ sudo service nginx restart
+--- พิมพ์คำสั่ง $ sudo mysql_install_db
+--- พิมพ์คำสั่ง $ sudo /usr/bin/mysql_secure_installation
+--- พิมพ์คำสั่ง $ y, y, y, y 
+--- พิมพ์ URL: http://192.168.43.143/info.php
+
+**** ขั้นตอนการติดตั้ว MySQL ****
+--- พิมพ์คำสั่ง $ mysql -uroot -p
+--- กรอกข้อมูล Password ให้กับ User: root
+--- พิมพ์คำสั่ง $ select version();
+--- พิมพ์คำสั่ง $ exit

@@ -1,0 +1,76 @@
+========================================================================================================
+Install NodeJS Version 6
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y curl
+- พิมพ์คำสั่ง $ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y build-essential libssl-dev nodejs
+- พิมพ์คำสั่ง $ node -v && npm -v
+
+========================================================================================================
+Update NPM Package
+========================================================================================================
+
+- พิมพ์คำสั่ง $ npm install npm -g
+- พิมพ์คำสั่ง $ node -v && npm -v
+
+========================================================================================================
+Connect Nginx Web Server
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/nginx/sites-available/[SERVERNAME]
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+server {
+
+	listen 80;
+    server_name [SERVERNAME];
+	
+    root /var/www/[SERVERNAME]; 
+	index index.php index.html index.htm;
+	
+    location / {
+		proxy_pass http://127.0.0.1:[PORTNODE];
+		proxy_set_header Host $host;
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        try_files $uri $uri/ /index.html;
+    }
+	
+    location ~ /\.ht    {return 404;}
+	
+    location ~* \.(js|css|jpg|jpeg|gif|png|svg|ico|pdf|html|htm)$ {
+        expires 10d;	
+    }
+	
+}
+
+========================================================================================================
+Run NodeJS Auto
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/init/[FILENAME].conf
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+description "node.js server"
+author      "Eakkabin Jaikeawma"
+
+start on started mountall
+stop on shutdown
+
+# Automatically Respawn:
+respawn
+respawn limit 99 5
+
+script
+    export HOME="/root"
+    cd [PATH]
+    exec /usr/bin/npm start >> /var/log/node.log 2>&1
+end script
+
+- พิมพ์คำสั่ง $ sudo start [FILENAME]
+- พิมพ์คำสั่ง $ sudo stop [FILENAME] && sudo start [FILENAME]

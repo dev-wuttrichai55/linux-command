@@ -30,7 +30,44 @@ http {
 	
 - พิมพ์คำสั่ง $ sudo service nginx stop && sudo service nginx start
 - พิมพ์คำสั่ง $ sudo netstat -plunt | grep 80
-- พิมพ์คำสั่ง $ curl -I http://192.168.199.2
+- พิมพ์คำสั่ง $ curl -I http://[IPADDRESS]
+
+========================================================================================================
+Create Host & Server Name
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/nginx/sites-available/[SERVERNAME]
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+server {
+
+	listen 80;
+    server_name [SERVERNAME];
+	
+    root /var/www/[SERVERNAME]; 
+	index index.html index.htm;
+	
+    location / {
+		location ~* ^.+\.(jpeg|jpg|png|gif|bmp|ico|svg|tif|tiff|css|js|htm|html|ttf|otf|webp|woff|txt|csv|rtf|doc|docx|xls|xlsx|ppt|pptx|odf|odp|ods|odt|pdf|psd|ai|eot|eps|ps|zip|tar|tgz|gz|rar|bz2|7z|aac|m4a|mp3|mp4|ogg|wav|wma|3gp|avi|flv|m4v|mkv|mov|mpeg|mpg|wmv|exe|iso|dmg|swf)$ {
+            proxy_cache    off;
+            root           /var/www/[SERVERNAME];
+            expires        max;
+            try_files      $uri $uri/ /index.html;
+        }
+    }
+	
+    location ~ /\.ht    {return 404;}
+	
+    location ~* \.(js|css|jpg|jpeg|gif|png|svg|ico|pdf|html|htm)$ {
+        expires 10d;	
+    }
+	
+}
+
+- พิมพ์คำสั่ง $ sudo ln -s /etc/nginx/sites-available/[SERVERNAME] /etc/nginx/sites-enabled/[SERVERNAME]
+- พิมพ์คำสั่ง $ sudo service nginx restart && service apache2 restart
+- พิมพ์คำสั่ง $ curl -I [SERVERNAME]
 
 ========================================================================================================
 กรณี ต้องการใช้งาน 2 Web Server (Nginx & Apache2)
@@ -46,21 +83,18 @@ server {
 	listen 80 default; 
     listen [::]:80 default;
 	
-    server_name 192.168.199.2;
-	error_log  /var/www/192.168.199.2.error.log error;
+    server_name [SERVERNAME];
+	error_log  /var/www/[SERVERNAME].error.log error;
 	
     root /var/www/www; 
     index index.php index.html index.htm;
 	
 	location / {
-	
         proxy_pass http://127.0.0.1:8080;
-		
 		proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-		
     }
 	
     location ~ /\.ht    {return 404;}
@@ -70,4 +104,4 @@ server {
 - พิมพ์คำสั่ง $ sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 - พิมพ์คำสั่ง $ sudo service nginx stop && sudo service nginx start
 - พิมพ์คำสั่ง $ sudo netstat -plunt | grep 80
-- พิมพ์คำสั่ง $ curl -I http://192.168.199.2
+- พิมพ์คำสั่ง $ curl -I http://[SERVERNAME]

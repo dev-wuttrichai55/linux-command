@@ -35,6 +35,32 @@ net:
 - พิมพ์คำสั่ง $ sudo service mongod stop && sudo service mongod start
 - พิมพ์คำสั่ง $ sudo netstat -plunt | grep 27017
 
+
+========================================================================================================
+สร้าง Database 
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo mongo --host [IPADDRESS] --port 27017
+- พิมพ์คำสั่ง $ use [DATABASENAME]
+
+========================================================================================================
+สำรอง Database
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo mongodump --host [IPADDRESS] --port 27017 --username [USERNAME] --password [PASSWORD] --collection [COLLECTION] --db [DATABASE] --out [DIRECTORY]
+
+- พิมพ์คำสั่ง $ sudo mongoexport --host [IPADDRESS] --port 27017 --username [USERNAME] --password [PASSWORD] --collection [COLLECTION] --db [DATABASE] --type=csv --fields name,address --out [DIRECTORY].csv
+- พิมพ์คำสั่ง $ sudo mongoexport --host [IPADDRESS] --port 27017 --username [USERNAME] --password [PASSWORD] --collection [COLLECTION] --db [DATABASE] --out [DIRECTORY].json
+
+========================================================================================================
+คืนค่าสำรอง Database
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo mongorestore --host [IPADDRESS] --port 27017 --username [USERNAME] --password [PASSWORD] [DIRECTORY]
+
+- พิมพ์คำสั่ง $ sudo mongoimport --host [IPADDRESS] --port 27017 --username [USERNAME] --password [PASSWORD] --collection [COLLECTION] --db [DATABASE] --type csv --headerline --file [DIRECTORY].csv
+- พิมพ์คำสั่ง $ sudo mongoimport --host [IPADDRESS] --port 27017 --username [USERNAME] --password [PASSWORD] --collection [COLLECTION] --db [DATABASE] --file [DIRECTORY].json
+
 ========================================================================================================
 กรณี ต้องการเชื่อมต่อจาก Client กับ Server
 ========================================================================================================
