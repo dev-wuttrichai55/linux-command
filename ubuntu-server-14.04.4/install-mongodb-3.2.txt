@@ -1,0 +1,101 @@
+========================================================================================================
+Update Package
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927					# mongodb 3.2
+- พิมพ์คำสั่ง $ echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list	
+
+- พิมพ์คำสั่ง $ sudo apt-get update && apt-get -y dist-upgrade && apt-get -y upgrade
+- พิมพ์คำสั่ง $ sudo apt-get autoremove -y
+
+========================================================================================================
+Install MongoDB 3.2.6
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y mongodb-org
+- พิมพ์คำสั่ง $ sudo service mongod start && sudo service mongod status
+- พิมพ์คำสั่ง $ sudo netstat -plunt | grep 27017
+
+========================================================================================================
+Setting MongoDB 3.2.6
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo mkdir -p /var/www/mongodb && sudo chmod 777 /var/www/mongodb
+
+- พิมพ์คำสั่ง $ sudo nano /etc/mongod.conf
+
+# แก้ไขคำสั่งดังต่อไปนี้
+
+storage:
+	dbPath: /var/www/mongodb
+	
+net:
+	port: 27017
+	
+- พิมพ์คำสั่ง $ sudo service mongod stop && sudo service mongod start
+- พิมพ์คำสั่ง $ sudo netstat -plunt | grep 27017
+
+========================================================================================================
+กรณี ต้องการเชื่อมต่อจาก Client กับ Server
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/mongod.conf
+
+# แก้ไขคำสั่งดังต่อไปนี้
+
+net:
+	bindIp: 127.0.0.1,[IPADDRESS]
+
+- พิมพ์คำสั่ง $ sudo service mongod stop && sudo service mongod start
+	
+- พิมพ์คำสั่ง $ sudo mongo --host [IPADDRESS] --port 27017
+- พิมพ์คำสั่ง $ use [DATABASENAME]
+
+- พิมพ์คำสั่ง $ db.createUser({user:"[USERNAME]",pwd:"[PASSWORD]",roles:[{role:"dbOwner",db:"[DATABASENAME]"}]})
+- พิมพ์คำสั่ง $ db.auth("[USERNAME]", "[PASSWORD]")
+
+- พิมพ์คำสั่ง $ exit;
+
+========================================================================================================
+กรณี ต้องการเชื่อมต่อจาก PHP 5.5.9 กับ MongoDB 3.2.6 (Apache2)
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y gcc php5-dev make php-pear
+- พิมพ์คำสั่ง $ sudo pecl install mongo หรือ mongodb
+
+- พิมพ์คำสั่ง $ sudo nano /etc/php5/apache2/php.ini
+
+# เพิ่มคำสั่งดังต่อไปนี้
+
+;;;;;;;;;;;;;;;;;;;;;
+;;  MongoDB 3.2.6  ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+extension=mongo.so
+
+- พิมพ์คำสั่ง $ sudo service apache2 restart
+
+========================================================================================================
+กรณี ต้องการเชื่อมต่อจาก PHP กับ MongoDB 3.2.6
+========================================================================================================
+
+- กรณี mongo
+new \MongoClient(); 
+
+- กรณี mongodb
+new \MongoDB\Driver\Manager();
+
+========================================================================================================
+กรณี ต้องการเชื่อมต่อจาก Robomongo กับ MongoDB 3.2.6
+========================================================================================================
+
+- ลิ้งค์ดาวโหลด https://download.robomongo.org/0.9.0-rc8/windows/robomongo-0.9.0-rc8-windows-x86_64-c113244.exe
+- กรอกข้อมูลเชื่อมต่อ MongoDB บน VPS SERVER ผ่าน โปรแกรม Robomongo
+
+  * Name: Ubuntu Server
+  * Address: [IPADDRESS]
+  * Port: 27017
+  * Database: [DATABASENAME]
+  * Username: [USERNAME]
+  * Password: [PASSWORD]
+  * Auth Mechanism: SCRAM-SHA-1

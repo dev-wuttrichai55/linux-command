@@ -1,0 +1,85 @@
+========================================================================================================
+Update Package
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo add-apt-repository ppa:ondrej/apache2 -y
+- พิมพ์คำสั่ง $ sudo apt-get update && apt-get -y dist-upgrade && apt-get -y upgrade
+- พิมพ์คำสั่ง $ sudo apt-get autoremove -y
+
+========================================================================================================
+Install Apache2 Web Server
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y apache2 apache2-utils
+
+========================================================================================================
+Setting Apache2 Web Server
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/apache2/apache2.conf
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป (ท้ายสุด)
+
+ServerSignature Off
+ServerTokens Prod
+
+- พิมพ์คำสั่ง $ sudo service apache2 stop && sudo service apache2 start
+- พิมพ์คำสั่ง $ sudo netstat -plunt | grep 80
+- พิมพ์คำสั่ง $ curl -I http://localhost
+
+========================================================================================================
+[ ERROR ] 127.0.1.1 for ServerName
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/hosts
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+127.0.0.1 localhost
+127.0.1.1 myhostname
+
+- พิมพ์คำสั่ง $ sudo nano /etc/apache2/conf-available/fqdn.conf
+
+# เพิ่มคำสั่งนี้ลงไป
+
+ServerName localhost
+
+- พิมพ์คำสั่ง $ sudo a2enconf fqdn && sudo service apache2 reload
+
+========================================================================================================
+กรณี ต้องการใช้งาน 2 Web Server (Nginx & Apache2)
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/apache2/ports.conf
+
+# แก้ไขคำสั่งต่อไปนี้
+
+# Listen 80
+Listen 127.0.0.1:8080
+
+- พิมพ์คำสั่ง $ sudo nano /etc/apache2/sites-available/nginx.conf
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+<VirtualHost *:8080>
+
+	ServerName 192.168.199.2
+	DirectoryIndex index index.html index.php
+	
+	ServerAdmin webmaster@localhost
+	DocumentRoot "/var/www/html"
+    
+	<Directory "/var/www/html">
+		Options Indexes FollowSymLinks Includes ExecCGI
+        AllowOverride All
+        Require all granted
+    </Directory>
+	
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
+
+- พิมพ์คำสั่ง $ a2ensite nginx && a2enmod rewrite
+- พิมพ์คำสั่ง $ sudo service apache2 restart
+- พิมพ์คำสั่ง $ curl -I http://localhost:8080

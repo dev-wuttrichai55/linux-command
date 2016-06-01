@@ -1,0 +1,52 @@
+========================================================================================================
+Update Package
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo add-apt-repository ppa:ondrej/mysql-5.7 -y
+- พิมพ์คำสั่ง $ sudo apt-get update && apt-get -y dist-upgrade && apt-get -y upgrade
+- พิมพ์คำสั่ง $ sudo apt-get autoremove -y
+
+========================================================================================================
+Install MySQL Server 5.7.12
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y mysql-server
+  * กรอก Password สำหรับ root (user)
+
+- พิมพ์คำสั่ง $ sudo /usr/bin/mysql_secure_installation
+
+  * ตัวเลือก # change the root password : n
+  * ตัวเลือก # remove anonymous users : y
+  * ตัวเลือก # disallow root login remotely : y
+  * ตัวเลือก # remove test database and access to it : y
+  * ตัวเลือก # reload privilege table now : y
+  
+- พิมพ์คำสั่ง $ sudo netstat -plunt | grep 3306
+
+========================================================================================================
+กรณี ต้องการแก้ไข PORT
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/mysql/my.cnf
+
+# แก้ไขคำสั่งต่อไปนี้
+
+[mysqld]
+
+port = 3306
+
+- พิมพ์คำสั่ง $ sudo service mysql restart
+- พิมพ์คำสั่ง $ sudo netstat -plunt | grep 3306
+
+========================================================================================================
+กรณี ต้องการเชื่อมต่อจาก Client กับ Server
+========================================================================================================
+
+- พิมพ์คำสั่ง $ mysql -u root -p
+- พิมพ์คำสั่ง $ CREATE DATABASE [DATABASENAME];
+
+- พิมพ์คำสั่ง $ CREATE USER '[USERNAME]'@'[IPADDRESS]' IDENTIFIED BY '[PASSWORD]';
+- พิมพ์คำสั่ง $ GRANT ALL PRIVILEGES ON [DATABASENAME].* TO '[USERNAME]'@'[IPADDRESS]' IDENTIFIED BY '[PASSWORD]' WITH GRANT OPTION;
+
+- พิมพ์คำสั่ง $ FLUSH PRIVILEGES;
+- พิมพ์คำสั่ง $ exit;

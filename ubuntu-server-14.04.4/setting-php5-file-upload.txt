@@ -1,0 +1,21 @@
+========================================================================================================
+Apache2 | file upload and post max size
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/php5/apache2/php.ini
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+;memory_limit = 128M
+memory_limit = 32M
+
+;post_max_size = 8M
+post_max_size = 20M
+
+;upload_max_filesize = 2M
+upload_max_filesize = 10M
+
+;max_file_uploads = 20
+max_file_uploads = 10
+
+- พิมพ์คำสั่ง $ sudo service apache2 restart
