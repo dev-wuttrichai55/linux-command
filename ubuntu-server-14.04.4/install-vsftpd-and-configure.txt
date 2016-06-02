@@ -37,10 +37,12 @@ Create Group
 Create FTP Account
 ========================================================================================================
 
-- พิมพ์คำสั่ง $ sudo useradd -m [USER] -g [GROUPNAME] -d /home/[USER] -s /usr/sbin/nologin
+- พิมพ์คำสั่ง $ sudo useradd -m [USER] -g [GROUPNAME] -d [DIRECTORY] -s /usr/sbin/nologin
 - พิมพ์คำสั่ง $ sudo passwd [USER]
 
-- พิมพ์คำสั่ง $ sudo mkdir -p /home/[USER] && chmod 0777 /home/[USER]
-- พิมพ์คำสั่ง $ sudo chown [USER]:[GROUPNAME] /home/[USER]
+- พิมพ์คำสั่ง $ sudo mkdir -p [DIRECTORY] && chmod 0777 [DIRECTORY]		# สร้าง DIRECTORY
 
-- พิมพ์คำสั่ง $ sudo deluser [USER]
+- พิมพ์คำสั่ง $ sudo chown [USER]:[GROUPNAME] [DIRECTORY]				# เปลี่ยน USER (เจ้าของ) เฉพาะ DIRECTORY (ไฟล์หรือโฟล์เดอร์) นี้เท่านั้น
+- พิมพ์คำสั่ง $ sudo chown -R [USER]:[GROUPNAME] [DIRECTORY]			# เปลี่ยน USER (เจ้าของ) DIRECTORY (ไฟล์และโฟล์เดอร์) ทั้งหมด
+
+- พิมพ์คำสั่ง $ sudo deluser [USER]										# ลบ USER
