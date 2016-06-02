@@ -1,0 +1,36 @@
+========================================================================================================
+Install Ubuntu Server x64 v14.04.4
+========================================================================================================
+
+- ลำดับที่ 1 เลื่อก Language: English
+- ลำดับที่ 2 เลือก Menu: Install Ubuntu Server
+- ลำดับที่ 3 เลื่อก Select a language: English - English
+- ลำดับที่ 4 เลื่อก Select your location: United States
+- ลำดับที่ 5 เลือก Configure the keyboard: No
+- ลำดับที่ 6 เลื่อก Configure the keyboard: English (US)
+- ลำดับที่ 7 เลื่อก Configure the keyboard: English (US)
+- ลำดับที่ 8 กรอก Hostname: ubuntu-server
+- ลำดับที่ 9 กรอก Full Name: Ubuntu Server x64 14.04.4
+- ลำดับที่ 10 กรอก Username (admin): admin-server
+- ลำดับที่ 11 กรอก Password: 123456
+- ลำดับที่ 12 เลื่อก Use weak password: Yes
+- ลำดับที่ 13 เลื่อก Encrypt your home directory: Yes
+- ลำดับที่ 14 เลื่อก Is this time zone correct: Yes
+- ลำดับที่ 15 เลื่อก Guided - use entire disk and set up LVM
+- ลำดับที่ 16 เลือก SCSI3 (0,0,0) (sda) - 10.7GB ATA VBOX HARDDISK
+- ลำดับที่ 17 เลือก Write the changes to disks and configure LVM?: Yes
+- ลำดับที่ 18 เลือก Paratition disls: Continue
+- ลำดับที่ 19 เลือก Write the changes to disk?: Yes
+- ลำดับที่ 20 เลือก Configure the package manager: Continue
+- ลำดับที่ 21 เลือก Install Security updates automatically
+- ลำดับที่ 22 เลือก Continue (ไม่เลือก Software) 
+- ลำดับที่ 23 เลือก Install the GRUB boot loader to the master boot record: Yes
+- ลำดับที่ 24 เลือก PAM Configuretion: Continue
+- ลำดับที่ 25 สิ้นสุด
+
+========================================================================================================
+TEST Ubuntu Server x64 v14.04.4
+========================================================================================================
+
+- กรอก Username (admin): admin-server
+- กรอก Password: 123456

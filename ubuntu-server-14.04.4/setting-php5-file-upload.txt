@@ -6,16 +6,9 @@ Apache2 | file upload and post max size
 
 # เพิ่มคำสั่งต่อไปนี้ลงไป
 
-;memory_limit = 128M
-memory_limit = 32M
-
-;post_max_size = 8M
-post_max_size = 20M
-
-;upload_max_filesize = 2M
-upload_max_filesize = 10M
-
-;max_file_uploads = 20
-max_file_uploads = 10
+memory_limit = 32M							# 128M old.
+post_max_size = 20M							# 8M old.
+upload_max_filesize = 10M					# 2M old.
+max_file_uploads = 10						# 20 old.
 
 - พิมพ์คำสั่ง $ sudo service apache2 restart

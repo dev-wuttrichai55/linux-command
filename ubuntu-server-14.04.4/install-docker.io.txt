@@ -1,0 +1,96 @@
+
+========================================================================================================
+Command Docker
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo docker search [IMAGE_NAME]						# ค้นหาไฟล์ Image
+- พิมพ์คำสั่ง $ sudo docker pull [IMAGE_NAME]						# ดาวโหลด (Pull) ไฟล์ Image (IMAGE_NAME)
+
+- พิมพ์คำสั่ง $ sudo docker run [IMAGE_NAME]						# รัน Image (IMAGE_NAME)
+- พิมพ์คำสั่ง $ sudo docker stop [IMAGE_NAME]						# หยุด Image (IMAGE_NAME)
+- พิมพ์คำสั่ง $ sudo docker rm [IMAGE_NAME]							# ลบ Image (IMAGE_NAME)
+- พิมพ์คำสั่ง $ sudo docker restart [IMAGE_NAME]					# เริ่ม Image ใหม่ (IMAGE_NAME)
+	
+- พิมพ์คำสั่ง $ sudo docker ps -a									# แสดง Container ทั้งหมด (-a: active, -l: latest)
+
+========================================================================================================
+Install Docker
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo curl -s 'https://sks-keyservers.net/pks/lookup?op=get&search=0xee6d536cf7dc86e2d7d56f59a178ac6c6238f52e' | sudo apt-key add --import
+- พิมพ์คำสั่ง $ sudo apt-get update && sudo apt-get install apt-transport-https 			# Install the HTTPS
+- พิมพ์คำสั่ง $ sudo apt-get install -y linux-image-extra-virtual 						# Install additional virtual drivers 
+
+- พิมพ์คำสั่ง $ sudo echo "deb https://packages.docker.com/1.11/apt/repo [VERSION] main" | sudo tee /etc/apt/sources.list.d/docker.list
+
+# [Version]
+
+- debian-jessie 	# Debian 8
+- debian-stretch 	# future release
+- debian-wheezy 	# Debian 7
+- ubuntu-precise 	# Ubuntu 12.04
+- ubuntu-trusty 	# Ubuntu 14.04
+- ubuntu-utopic 	# Ubuntu 14.10
+- ubuntu-vivid 		# Ubuntu 15.04
+- ubuntu-wily 		# Ubuntu 15.10
+
+- พิมพ์คำสั่ง $ sudo usermod -a -G docker $USER
+
+========================================================================================================
+Run Docker Engine
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get update && sudo apt-get install -y docker-engine
+- พิมพ์คำสั่ง $ sudo docker info
+
+- พิมพ์คำสั่ง $ sudo service start docker
+- พิมพ์คำสั่ง $ sudo service stop docker
+
+========================================================================================================
+Nginx Docker image
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo docker pull nginx
+- พิมพ์คำสั่ง $ sudo docker run --name docker-nginx -p 80:80 nginx
+- พิมพ์คำสั่ง $ sudo docker stop docker-nginx
+- พิมพ์คำสั่ง $ sudo docker rm docker-nginx
+
+- พิมพ์คำสั่ง $ sudo docker ps -a
+
+========================================================================================================
+TEST Nginx Docker
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo mkdir -p ~/docker-nginx/html
+- พิมพ์คำสั่ง $ sudo cd ~/docker-nginx/html
+- พิมพ์คำสั่ง $ sudo nano index.html
+
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" >
+    <title>Docker Nginx Tutorial</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Hello Docker Tutorial</h1>
+      <p>This nginx page is brought to you by Docker</p>
+    </div>
+  </body>
+</html>
+
+- พิมพ์คำสั่ง $ sudo docker run --name docker-nginx -p 80:80 -d -v ~/docker-nginx/html:/usr/share/nginx/html nginx
+
+- พิมพ์คำสั่ง $ cd ~/docker-nginx
+- พิมพ์คำสั่ง $ sudo docker cp docker-nginx:/etc/nginx/conf.d/default.conf default.conf
+- พิมพ์คำสั่ง $ sudo docker stop docker-nginx
+- พิมพ์คำสั่ง $ sudo docker rm docker-nginx
+- พิมพ์คำสั่ง $ sudo docker run --name docker-nginx -p 80:80 -v ~/docker-nginx/html:/usr/share/nginx/html -v ~/docker-nginx/default.conf:/etc/nginx/conf.d/default.conf -d nginx
+- พิมพ์คำสั่ง $ sudo docker restart docker-nginx
+- พิมพ์คำสั่ง $ sudo docker ps -a
+
+========================================================================================================
+Pushing Docker Images to a Docker Repository (Docker Hub)
+========================================================================================================
+
+- พิมพ์คำสั่ง $ docker login -u [USERNAME]
+- พิมพ์คำสั่ง $ docker push docker-registry-username/docker-image-name
