@@ -80,6 +80,6 @@ Listen 127.0.0.1:8080
 
 </VirtualHost>
 
-- พิมพ์คำสั่ง $ a2ensite nginx && a2enmod rewrite
+- พิมพ์คำสั่ง $ sudo a2ensite nginx && a2enmod rewrite
 - พิมพ์คำสั่ง $ sudo service apache2 restart
 - พิมพ์คำสั่ง $ curl -I http://localhost:8080

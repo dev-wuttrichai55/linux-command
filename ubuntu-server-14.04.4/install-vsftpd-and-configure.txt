@@ -12,11 +12,11 @@ Configure vsftpd
 
 # แก้ไขคำสั่งต่อไปนี้
 
-anonymous_enable=NO		# ไม่อนุญาติให้คนทั่วไปเข้าใช้งาน
-local_umask=022			# กำหนดสิทธิ์ 022 อัตโนมัติ
-local_enable=YES		# ให้ User ที่อยู่ใน Network วงเดียวกันกับ Server) สามารถใช้งาน  FTP ได้
-write_enable=YES		# อนุญาติให้ Upload File ไปที่ Server ได้
-chroot_local_user=YES   # ให้ USER อยู่แต่ใน HOME Directory ของตัวเองเท่านั้น
+anonymous_enable=NO							# ไม่อนุญาติให้คนทั่วไปเข้าใช้งาน
+local_umask=022								# กำหนดสิทธิ์ 022 อัตโนมัติ
+local_enable=YES							# ให้ User ที่อยู่ใน Network วงเดียวกันกับ Server) สามารถใช้งาน  FTP ได้
+write_enable=YES							# อนุญาติให้ Upload File ไปที่ Server ได้
+chroot_local_user=YES   					# ให้ USER อยู่แต่ใน HOME Directory ของตัวเองเท่านั้น
 
 - พิมพ์คำสั่ง $ sudo nano /etc/shells
 
@@ -37,12 +37,13 @@ Create Group
 Create FTP Account
 ========================================================================================================
 
-- พิมพ์คำสั่ง $ sudo useradd -m [USER] -g [GROUPNAME] -d [DIRECTORY] -s /usr/sbin/nologin
-- พิมพ์คำสั่ง $ sudo passwd [USER]
+- พิมพ์คำสั่ง $ sudo useradd -m [USERNAME] -g [GROUPNAME] -d [DIRECTORY] -s /usr/sbin/nologin
+- พิมพ์คำสั่ง $ sudo passwd [USERNAME]
 
 - พิมพ์คำสั่ง $ sudo mkdir -p [DIRECTORY] && chmod 0777 [DIRECTORY]		# สร้าง DIRECTORY
 
 - พิมพ์คำสั่ง $ sudo chown [USER]:[GROUPNAME] [DIRECTORY]				# เปลี่ยน USER (เจ้าของ) เฉพาะ DIRECTORY (ไฟล์หรือโฟล์เดอร์) นี้เท่านั้น
 - พิมพ์คำสั่ง $ sudo chown -R [USER]:[GROUPNAME] [DIRECTORY]			# เปลี่ยน USER (เจ้าของ) DIRECTORY (ไฟล์และโฟล์เดอร์) ทั้งหมด
 
-- พิมพ์คำสั่ง $ sudo deluser [USER]										# ลบ USER
+- พิมพ์คำสั่ง $ sudo usermod -a -G [GROUPNAME] [USERNAME]				# เปลี่ยน USER (เจ้าของ)
+- พิมพ์คำสั่ง $ sudo deluser [USER]										# ลบ USER (เจ้าของ)
