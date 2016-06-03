@@ -1,0 +1,48 @@
+========================================================================================================
+Install PhpMyAdmin with Apache2
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y php5-mcrypt phpmyadmin 
+
+   * เลือกรายการ apache2
+   * กรอกข้อมูล Password ให้กับ admin mysql 
+   * กรอกข้อมูล Password Confirm ให้กับ admin mysql
+   * กรอกข้อมูล Password ให้กับ user: root
+
+- พิมพ์คำสั่ง $ sudo service apache2 restart
+- Browser URL: http://localhost/phpmyadmin
+
+========================================================================================================
+เพิ่มความปลอดภัย  PhpMyAdmin
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo nano /etc/apache2/apache2.conf
+- ค้นหาคำสั่ง [ Ctrl + w ] คำว่า "ports.conf"
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+Include ports.conf
+Include /etc/phpmyadmin/apache.conf				# เพิ่มคำสั่งนี้ลงไป
+
+- พิมพ์คำสั่ง $ sudo nano /etc/phpmyadmin/apache.conf
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+DirectoryIndex index.php
+AllowOverride All								# เพิ่มคำสั่งนี้ลงไป
+
+- พิมพ์คำสั่ง $ sudo nano /usr/share/phpmyadmin/.htaccess
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+AuthType Basic
+AuthName "Administration"
+AuthUserFile /etc/apache2/.phpmyadmin.htpasswd
+Require valid-user
+
+- พิมพ์คำสั่ง $ sudo htpasswd -c /etc/apache2/.phpmyadmin.htpasswd admin 
+   * กรอกข้อมูล Password ให้กับ user: admin
+   * กรอกข้อมูล Password Confirm ให้กับ user: admin
+   
+- พิมพ์คำสั่ง $ sudo service apache2 restart
+- Browser URL: http://localhost/phpmyadmin

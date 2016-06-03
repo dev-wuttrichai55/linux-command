@@ -1,0 +1,37 @@
+========================================================================================================
+Install PHP FPM 5.5.x 
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo apt-get install -y php5-fpm
+- พิมพ์คำสั่ง $ sudo nano /etc/php5/fpm/php.ini
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+cgi.fix_pathinfo = 0
+
+- พิมพ์คำสั่ง $ sudo service php5-fpm restart
+- พิมพ์คำสั่ง $ sudo nano /etc/nginx/sites-available/default
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+server {
+   
+    ......
+	index index.php index.html index.htm;
+	
+	location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT /var/www/html/;
+        include fastcgi_params;
+		try_files $uri = 404;
+    }
+
+}
+
+- พิมพ์คำสั่ง $ sudo service nginx restart && php -v
+
+- พิมพ์คำสั่ง $ echo '<?php phpinfo(); ?>' > /var/www/html/info.php
+- พิมพ์คำสั่ง $ curl -I http://localhost/info.php

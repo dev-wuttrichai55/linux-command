@@ -22,7 +22,7 @@ Setting PHP 5.5.9
 
 expose_php = on
 
-- พิมพ์คำสั่ง $ sudo service nginx restart && service apache2 restart && php -v
+- พิมพ์คำสั่ง $ service apache2 restart && php -v
 
 - พิมพ์คำสั่ง $ echo '<?php phpinfo(); ?>' > /var/www/html/info.php
 - พิมพ์คำสั่ง $ curl -I http://localhost/info.php

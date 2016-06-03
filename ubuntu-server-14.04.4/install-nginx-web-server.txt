@@ -86,7 +86,7 @@ server {
     server_name [SERVERNAME];
 	error_log  /var/www/[SERVERNAME].error.log error;
 	
-    root /var/www/www; 
+    root /var/www/html; 
     index index.php index.html index.htm;
 	
 	location / {
