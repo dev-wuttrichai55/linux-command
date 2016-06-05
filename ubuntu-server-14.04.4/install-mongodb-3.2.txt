@@ -35,7 +35,6 @@ net:
 - พิมพ์คำสั่ง $ sudo service mongod stop && sudo service mongod start
 - พิมพ์คำสั่ง $ sudo netstat -plunt | grep 27017
 
-
 ========================================================================================================
 สร้าง Database 
 ========================================================================================================
@@ -95,8 +94,27 @@ net:
 กรณี ต้องการเชื่อมต่อจาก PHP 5.5.9 กับ MongoDB 3.2.6 (Apache2)
 ========================================================================================================
 
+**** วิธีที่ 1 ****
+
 - พิมพ์คำสั่ง $ sudo apt-get install -y gcc php5-dev make php-pear
-- พิมพ์คำสั่ง $ sudo pecl install mongo หรือ mongodb
+- พิมพ์คำสั่ง $ sudo pecl install mongo
+
+**** วิธีที่ 2 ****
+
+- Last Version: https://pecl.php.net/package/mongo
+
+- พิมพ์คำสั่ง $ wget https://pecl.php.net/get/mongo-1.6.14.tgz
+- พิมพ์คำสั่ง $ sudo tar zxvf mongo-1.6.14.tgz
+- พิมพ์คำสั่ง $ sudo cd mongo-1.6.14
+- พิมพ์คำสั่ง $ sudo phpize
+- พิมพ์คำสั่ง $ sudo ./configure
+
+- พิมพ์คำสั่ง $ make
+- พิมพ์คำสั่ง $ sudo make install
+- พิมพ์คำสั่ง $ sudo ls /usr/lib/php5/20121212/
+- พิมพ์คำสั่ง $ sudo service apache2 restart
+
+========================================================================================================
 
 - พิมพ์คำสั่ง $ sudo nano /etc/php5/apache2/php.ini
 

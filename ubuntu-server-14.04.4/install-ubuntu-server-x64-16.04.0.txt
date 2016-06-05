@@ -1,5 +1,5 @@
 ========================================================================================================
-Install Ubuntu Server x64 v14.04.4
+Install Ubuntu Server x64 v16.04.0
 ========================================================================================================
 
 - ลำดับที่ 1 เลื่อก Language: English
@@ -10,7 +10,7 @@ Install Ubuntu Server x64 v14.04.4
 - ลำดับที่ 6 เลื่อก Configure the keyboard: English (US)
 - ลำดับที่ 7 เลื่อก Configure the keyboard: English (US)
 - ลำดับที่ 8 กรอก Hostname: ubuntu-server
-- ลำดับที่ 9 กรอก Full Name: Ubuntu Server x64 14.04.4
+- ลำดับที่ 9 กรอก Full Name: Ubuntu Server x64 16.04.0
 - ลำดับที่ 10 กรอก Username (admin): ubuntu-server
 - ลำดับที่ 11 กรอก Password: 123456
 - ลำดับที่ 12 เลื่อก Use weak password: Yes
@@ -29,7 +29,7 @@ Install Ubuntu Server x64 v14.04.4
 - ลำดับที่ 25 สิ้นสุด
 
 ========================================================================================================
-TEST Ubuntu Server x64 v14.04.4
+TEST Ubuntu Server x64 v16.04.0
 ========================================================================================================
 
 - กรอก Username (admin): ubuntu-server

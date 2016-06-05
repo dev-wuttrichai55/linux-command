@@ -1,0 +1,162 @@
+========================================================================================================
+Install RethinkDB on Ubuntu
+========================================================================================================
+
+****** วิธีที่ 1 With binaries ******
+
+- พิมพ์คำสั่ง $ source /etc/lsb-release && echo "deb http://download.rethinkdb.com/apt $DISTRIB_CODENAME main" | sudo tee /etc/apt/sources.list.d/rethinkdb.list
+- พิมพ์คำสั่ง $ sudo wget -qO- https://download.rethinkdb.com/apt/pubkey.gpg | sudo apt-key add -
+
+- พิมพ์คำสั่ง $ sudo apt-get update && apt-get -y dist-upgrade && apt-get -y upgrade
+- พิมพ์คำสั่ง $ sudo apt-get install -y rethinkdb
+
+****** วิธีที่ 2 Compile from source ******
+
+- พิมพ์คำสั่ง $ sudo apt-get install build-essential protobuf-compiler python libprotobuf-dev libcurl4-openssl-dev libboost-all-dev libncurses5-dev libjemalloc-dev wget m4
+- พิมพ์คำสั่ง $ sudo wget https://download.rethinkdb.com/dist/rethinkdb-2.3.4.tgz
+- พิมพ์คำสั่ง $ sudo tar xf rethinkdb-2.3.4.tgz
+- พิมพ์คำสั่ง $ cd rethinkdb-2.3.4
+- พิมพ์คำสั่ง $ ./configure --allow-fetch
+- พิมพ์คำสั่ง $ make
+- พิมพ์คำสั่ง $ sudo make install
+
+========================================================================================================
+Setting RethinkDB on Ubuntu
+========================================================================================================
+
+- พิมพ์คำสั่ง $ rethinkdb
+- พิมพ์คำสั่ง $ sudo cp /etc/rethinkdb/default.conf.sample /etc/rethinkdb/instances.d/instance1.conf
+- พิมพ์คำสั่ง $ sudo nano /etc/rethinkdb/instances.d/instance1.conf
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+runuser=rethinkdb
+rungroup=rethinkdb
+directory=/backup/db/rethinkdb
+bind=192.168.199.2
+http-port=8081
+server-name=server1
+
+- พิมพ์คำสั่ง $ sudo mkdir -p /backup/db/rethinkdb && sudo chmod 777 /backup/db/rethinkdb
+- พิมพ์คำสั่ง $ sudo chown -R rethinkdb:rethinkdb /backup/db/rethinkdb
+- พิมพ์คำสั่ง $ sudo /etc/init.d/rethinkdb restart || sudo service rethinkdb restart
+- พิมพ์คำสั่ง $ sudo netstat -plunt | grep 8081
+- เปิด Browser $ http://192.168.199.2:8081
+
+========================================================================================================
+Start RethinkDB on Ubuntu
+========================================================================================================
+
+- พิมพ์คำสั่ง $ sudo npm install rethinkdb -g
+- พิมพ์คำสั่ง $ node
+
+# เพิ่มคำสั่งต่อไปนี้ลงไป
+
+r = require('rethinkdb'); 
+
+var connection = null; 
+r.connect( {host: 'localhost', port: 28015}, function(err, conn) { 
+	if (err) throw err; 
+	connection = conn;
+})
+
+========================================================================================================
+Create Table
+========================================================================================================
+
+r.db('test').tableCreate('authors').run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+})
+
+========================================================================================================
+Insert documents
+========================================================================================================
+
+r.table('authors').insert([
+    { name: "William Adama", tv_show: "Battlestar Galactica",
+      posts: [
+        {title: "Decommissioning speech", content: "The Cylon War is long over..."},
+        {title: "We are at war", content: "Moments ago, this ship received word..."},
+        {title: "The new Earth", content: "The discoveries of the past few days..."}
+      ]
+    },
+    { name: "Laura Roslin", tv_show: "Battlestar Galactica",
+      posts: [
+        {title: "The oath of office", content: "I, Laura Roslin, ..."},
+        {title: "They look like us", content: "The Cylons have the ability..."}
+      ]
+    },
+    { name: "Jean-Luc Picard", tv_show: "Star Trek TNG",
+      posts: [
+        {title: "Civil rights", content: "There are some words I've known since..."}
+      ]
+    }
+]).run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+})
+
+========================================================================================================
+Select documents
+========================================================================================================
+
+r.table('authors').get('7644aaf2-9928-4231-aa68-4e65e31bf219').run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+});
+	
+r.table('authors').run(connection, function(err, result) {
+    if (err) throw err;
+    result.toArray(function(err, result) {
+        if (err) throw err;
+        console.log(JSON.stringify(result, null, 2));
+    });
+});
+
+r.table('authors').filter(r.row('name').eq("William Adama")).run(connection, function(err, result) {
+    if (err) throw err;
+    result.toArray(function(err, result) {
+        if (err) throw err;
+        console.log(JSON.stringify(result, null, 2));
+    });
+});
+
+r.table('authors').filter(r.row('posts').count().gt(2)).run(connection, function(err, result) {
+    if (err) throw err;
+    result.toArray(function(err, result) {
+        if (err) throw err;
+        console.log(JSON.stringify(result, null, 2));
+    });
+});
+
+========================================================================================================
+Update documents
+========================================================================================================
+
+r.table('authors').update({type: "fictional"}).run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+});
+
+r.table('authors').filter(r.row("name").eq("William Adama")).update({rank: "Admiral"}).run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+});
+
+r.table('authors').filter(r.row("name").eq("Jean-Luc Picard")).update({posts: r.row("posts").append({
+    title: "Shakespeare",
+    content: "What a piece of work is man..."})
+}).run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+});
+
+========================================================================================================
+Delete documents
+========================================================================================================
+
+r.table('authors').filter(r.row('posts').count().lt(3)).delete().run(connection, function(err, result) {
+    if (err) throw err;
+    console.log(JSON.stringify(result, null, 2));
+});
